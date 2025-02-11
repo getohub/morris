@@ -1,0 +1,141 @@
+/* body { */
+  /* background-color: #ffffff !important; */
+  /* font-family: Arial, sans-serif;
+  text-align: center; */
+/* } */
+
+/* .morris-board {
+  display: grid;
+  grid-template-columns: repeat(7, 50px);
+  grid-template-rows: repeat(7, 50px);
+  gap: 5px;
+  margin: 20px auto;
+  width: 350px;
+  height: 350px;
+  position: relative; */
+  /* background: radial-gradient(circle, transparent 49%, black 50%) 0 0 / 50px 50px; */
+/* } */
+
+/* .point {
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.point.occupied {
+  background-color: gray;
+}
+
+.point.selected {
+  background-color: orange;
+}
+
+.point.occupied.O {
+  background-color: blue;
+}
+
+.point.occupied.X {
+  background-color: red;
+}
+
+.info-panel {
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+button {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #333;
+} */
+
+.game-container {
+  display: flex;
+  padding: 20px;
+  gap: 40px;
+}
+
+.board {
+  position: relative;
+  width: 600px;
+  height: 600px;
+  background: #f0f0f0;
+}
+
+.board-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.position {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #000;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.position:hover {
+  background: #eee;
+}
+
+.position.selected {
+  background: #ffeb3b;
+}
+
+.piece-X {
+  background: #f44336;
+}
+
+.piece-O {
+  background: #2196f3;
+}
+
+.info-panel {
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.counter {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.counter button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  background: #2196f3;
+  color: white;
+  cursor: pointer;
+}
+
+.counter button:hover {
+  background: #1976d2;
+}
