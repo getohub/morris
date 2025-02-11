@@ -5,7 +5,16 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
 const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
-const socket = io(`${SOCKET_URL}`);
+const socket = io(`${SOCKET_URL}`, {
+  withCredentials: true,
+  transportOptions: {
+      polling: {
+          extraHeaders: {
+              "Access-Control-Allow-Origin": "*"
+          }
+      }
+  }
+});
 
 const MorrisGame = ({ gameId, role, players, onGameStateChange }) => {
   const navigate = useNavigate();

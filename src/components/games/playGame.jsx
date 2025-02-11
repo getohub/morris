@@ -7,7 +7,16 @@ import { jwtDecode } from 'jwt-decode';
 
 const API_URL = import.meta.env.VITE_API_URL;
 const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
-const socket = io(`${SOCKET_URL}`);
+const socket = io(`${SOCKET_URL}`, {
+  withCredentials: true,
+  transportOptions: {
+      polling: {
+          extraHeaders: {
+              "Access-Control-Allow-Origin": "*"
+          }
+      }
+  }
+});
 
 function PlayGame() {
   const navigate = useNavigate();
