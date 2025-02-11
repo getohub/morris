@@ -4,7 +4,8 @@ import io from "socket.io-client";
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
-const socket = io('http://localhost:3001');
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
+const socket = io(`${SOCKET_URL}`);
 
 const MorrisGame = ({ gameId, role, players, onGameStateChange }) => {
   const navigate = useNavigate();
@@ -74,7 +75,7 @@ const MorrisGame = ({ gameId, role, players, onGameStateChange }) => {
       const winnerId = newState.players.find(p => p.role === newState.winner)?.id;
 
       // Make API call to save game result
-      fetch(`http://localhost:3000/game/${gameId}/finish`, {
+      fetch(`${API_URL}/game/${gameId}/finish`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

@@ -3,7 +3,9 @@ import { AuthContext } from '../auth/AuthContext.jsx';
 import { useNavigate } from 'react-router-dom';
 import { io } from 'socket.io-client';
 
-const socket = io('http://localhost:3001');
+const API_URL = import.meta.env.VITE_API_URL;
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
+const socket = io(`${SOCKET_URL}`);
 
 function joinGame() {
   const { user } = useContext(AuthContext);
@@ -22,8 +24,7 @@ function joinGame() {
         setError('Token not found');
         return;
       }
-
-      const response = await fetch('http://localhost:3000/games', {
+      const response = await fetch(`${API_URL}/games`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -40,7 +41,7 @@ function joinGame() {
           .filter(game => game.state !== "finished" && !game.winner)
           .map(async (game) => {
             try {
-              const creatorResponse = await fetch(`http://localhost:3000/users/${game.creator}`, {
+              const creatorResponse = await fetch(`${API_URL}/users/${game.creator}`, {
                 headers: {
                   'Authorization': `Bearer ${token}`
                 }
@@ -49,7 +50,7 @@ function joinGame() {
 
               let playerData = null;
               if (game.player) {
-                const playerResponse = await fetch(`http://localhost:3000/users/${game.player}`, {
+                const playerResponse = await fetch(`${API_URL}/users/${game.player}`, {
                   headers: {
                     'Authorization': `Bearer ${token}`
                   }
@@ -85,7 +86,7 @@ function joinGame() {
   };
 
   useEffect(() => {
-    const socket = io('http://localhost:3001');
+    const socket = io(`${SOCKET_URL}`);
 
     if (!user || !user.token) {
       setError('User not authenticated');
@@ -147,7 +148,7 @@ function joinGame() {
   }, [user?.token]);
 
   const fetchUserById = (userId) => {
-    return fetch(`http://localhost:3000/users/${userId}`, {
+    return fetch(`${API_URL}/users/${userId}`, {
       headers: {
         'Authorization': `Bearer ${user.token}`,
         'Content-Type': 'application/json'
@@ -174,7 +175,7 @@ function joinGame() {
 
     try {
       setIsLoading(true);
-      const response = await fetch('http://localhost:3000/game', {
+      const response = await fetch(`${API_URL}/game`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${user.token}`,
@@ -216,7 +217,7 @@ function joinGame() {
 
       setIsLoading(true);
       setError(null);
-      const response = await fetch(`http://localhost:3000/game/join/${gameId}`, {
+      const response = await fetch(`${API_URL}/game/join/${gameId}`, {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${user.token}`,

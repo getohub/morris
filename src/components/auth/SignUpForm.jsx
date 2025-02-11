@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 
+const API_URL = import.meta.env.VITE_API_URL;
+const URL_FRONT = import.meta.env.VITE_URL_FRONT;
 const heading = "Inscription au jeu";
 
 const validationSchema = Yup.object().shape({
@@ -42,10 +44,10 @@ function SignUpForm({ toggleForm }) {
                 validationSchema={validationSchema}
                 onSubmit={async (values) => {
                     try {
-                        const response = await axios.post('http://localhost:3000/register', values);
+                        const response = await axios.post(`${API_URL}/register`, values);
                         if (response.status === 200) {
                             alert('Inscription réussie, veuillez vérifier votre boîte mail pour activer votre compte');
-                            window.location.href = 'http://localhost:5173/auth/login';
+                            window.location.href = `${URL_FRONT}/auth/login`;
                         }
                     } catch (error) {
                         console.error('Erreur lors de l\'inscription');

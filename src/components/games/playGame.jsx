@@ -5,7 +5,9 @@ import io from 'socket.io-client';
 import MorrisGame from './MorrisGame.jsx';
 import { jwtDecode } from 'jwt-decode';
 
-const socket = io('http://localhost:3001');
+const API_URL = import.meta.env.VITE_API_URL;
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
+const socket = io(`${SOCKET_URL}`);
 
 function PlayGame() {
   const navigate = useNavigate();
@@ -62,7 +64,7 @@ function PlayGame() {
 
     const fetchGame = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/game/${gameId}`, {
+        const response = await fetch(`${API_URL}/game/${gameId}`, {
           headers: {
             'Authorization': `Bearer ${user.token}`,
             'Content-Type': 'application/json'
@@ -145,7 +147,7 @@ function PlayGame() {
 
   const leaveGame = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/game/leave/${gameId}`, {
+    const response = await fetch(`${API_URL}/game/leave/${gameId}`, {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${user.token}`,

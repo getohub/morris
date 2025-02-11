@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
 import { Link } from 'react-router-dom';
 
+const API_URL = import.meta.env.VITE_API_URL;
 const heading = "Se connecter";
 
 const validationSchema = Yup.object().shape({
@@ -27,7 +28,7 @@ function LoginForm() {
         validationSchema: validationSchema,
         onSubmit: async (values) => {
             try {
-                const response = await axios.post('http://localhost:3000/login', values);
+                const response = await axios.post(`${API_URL}/login`, values);
                 if (response.data.token) {
                     setTokenValue(response.data.token);
                     navigate('/');

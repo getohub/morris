@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../auth/AuthContext';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function Home() {
   const { user } = useContext(AuthContext);
 
@@ -14,7 +16,7 @@ function Home() {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/game', {
+      const response = await fetch(`${API_URL}/game`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${user.token}`,
