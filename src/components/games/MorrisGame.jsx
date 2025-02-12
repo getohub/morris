@@ -10,7 +10,7 @@ const socket = io(`${SOCKET_URL}`, {
   transportOptions: {
       polling: {
           extraHeaders: {
-              "Access-Control-Allow-Origin": "*"
+                "Access-Control-Allow-Origin": `${URL_FRONT}`
           }
       }
   }
