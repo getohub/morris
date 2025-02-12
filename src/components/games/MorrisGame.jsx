@@ -4,7 +4,9 @@ import io from "socket.io-client";
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
+const URL_FRONT = import.meta.env.VITE_URL_FRONT;
 const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
+
 const socket = io(`${SOCKET_URL}`, {
   withCredentials: true,
   transportOptions: {
