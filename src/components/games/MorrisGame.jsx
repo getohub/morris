@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 const URL_FRONT = import.meta.env.VITE_URL_FRONT;
 const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 const socket = io(`${SOCKET_URL}`, {
   withCredentials: true,
@@ -455,14 +456,14 @@ const MorrisGame = ({ gameId, role, players, onGameStateChange }) => {
 
       {/* Message de statut du jeu */}
       {gameState.phase === 'moving' && gameState.selectedPiece !== null && (
-        <div className="absolute top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded shadow-lg animate-bounce" style={{ top: 6 + 'em' }}>
+        <div className="absolute top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded shadow-lg animate-bounce notifs">
           Sélectionnez une position pour déplacer votre pièce
         </div>
       )}
 
       {/* Game messages */}
       {gameState.message && (
-        <div className="absolute top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded shadow-lg animate-bounce" style={{ top: 6 + 'em' }}>
+        <div className="absolute top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded shadow-lg animate-bounce notifs">
           {gameState.message}
         </div>
       )}

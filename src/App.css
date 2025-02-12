@@ -40,3 +40,10 @@
 .read-the-docs {
   color: #888;
 }
+
+.notifs {
+  position: fixed;
+  bottom: 2em;
+  display: flex;
+  align-self: flex-end;
+}

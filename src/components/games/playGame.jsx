@@ -197,9 +197,9 @@ function PlayGame() {
       <div className="container mx-auto px-4">
         <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
           <h2 className="text-2xl font-bold text-gray-800 mb-">Nine Men's Morris</h2>
+          <span className="text-sm text-gray-500">ID du jeu : {gameId}</span>
           <div className="flex justify-between items-center mb-4">
             <p className="font-bold text-gray-800">Joueurs actuels</p>
-            <span className="text-sm text-gray-500">ID du jeu : {gameId}</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -296,7 +296,7 @@ function PlayGame() {
           onGameStateChange={(newState) => setGameState(newState)}
         />
 
-        <div className="flex justify-between items-center mt-4">
+        <div className="flex justify-center items-center mt-8">
           <button
             onClick={leaveGame}
             className="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition"
