@@ -8,14 +8,15 @@ const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
 const URL_FRONT = import.meta.env.VITE_URL_FRONT;
 
 const socket = io(`${SOCKET_URL}`, {
-    withCredentials: true,
-    transportOptions: {
-        polling: {
-            extraHeaders: {
-                "Access-Control-Allow-Origin": `${URL_FRONT}`
-            }
-        }
+  withCredentials: true,
+  transports: ['websocket', 'polling'],
+  transportOptions: {
+    polling: {
+      extraHeaders: {
+        'Access-Control-Allow-Origin': URL_FRONT
+      }
     }
+  }
 });
 
 function joinGame() {

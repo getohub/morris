@@ -11,12 +11,13 @@ const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
 
 const socket = io(`${SOCKET_URL}`, {
   withCredentials: true,
+  transports: ['websocket', 'polling'],
   transportOptions: {
-      polling: {
-          extraHeaders: {
-                "Access-Control-Allow-Origin": `${URL_FRONT}`
-          }
+    polling: {
+      extraHeaders: {
+        'Access-Control-Allow-Origin': URL_FRONT
       }
+    }
   }
 });
 
