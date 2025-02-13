@@ -411,7 +411,23 @@ const MorrisGame = ({ gameId, role, players, onGameStateChange }) => {
 
   // Render board
   return (
+    <div>
+      {/* Message de statut du jeu */}
+      {gameState.phase === 'moving' && gameState.selectedPiece !== null && (
+        <div className="relative max-h-[3em] mb-8 bg-blue-500 text-white px-4 py-2 rounded shadow-lg animate-bounce">
+          Sélectionnez une position pour déplacer votre pièce
+        </div>
+      )}
+
+      {/* Game messages */}
+      {gameState.message && (
+        <div className="relative max-h-[3em] mb-8 bg-blue-500 text-white px-4 py-2 rounded shadow-lg animate-bounce">
+          {gameState.message}
+        </div>
+      )}
     <div className="flex flex-col md:flex-row gap-8 p-6 bg-gray-100">
+
+
       <div className="relative w-[600px] h-[600px] rounded-lg shadow-lg p-4">
 
         <svg className="absolute inset-0 w-full h-full" viewBox="0 0 600 600">
@@ -453,20 +469,7 @@ const MorrisGame = ({ gameId, role, players, onGameStateChange }) => {
           />
         ))}
       </div>
-
-      {/* Message de statut du jeu */}
-      {gameState.phase === 'moving' && gameState.selectedPiece !== null && (
-        <div className="absolute top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded shadow-lg animate-bounce notifs">
-          Sélectionnez une position pour déplacer votre pièce
-        </div>
-      )}
-
-      {/* Game messages */}
-      {gameState.message && (
-        <div className="absolute top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded shadow-lg animate-bounce notifs">
-          {gameState.message}
-        </div>
-      )}
+      </div>
 
       {/* Victory/Defeat Modal */}
       {gameState.gameOver && (
