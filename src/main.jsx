@@ -12,6 +12,7 @@ import Playgame from './components/games/playGame'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import AuthProvider from './components/auth/AuthContext'
+import TermsAndConditions from './components/app/Terms'
 
 const router = createBrowserRouter([
   {
@@ -26,14 +27,18 @@ const router = createBrowserRouter([
         element: <AuthLayout />,
         children: [
           {
-            path: '/auth/login',
+            path: 'login',
             element: <LoginForm />,
           },
           {
-            path: '/auth/signup',
+            path: 'signup',
             element: <SignUpForm />,
           },
         ]
+      },
+      {
+        path: '/terms',
+        element: <TermsAndConditions />,
       },
       { 
         path: '/verifyEmail/:id',
