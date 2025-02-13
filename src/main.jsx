@@ -41,7 +41,7 @@ const router = createBrowserRouter([
         element: <TermsAndConditions />,
       },
       { 
-        path: '/verifyEmail/:id',
+        path: 'verifyEmail/:id',
         element: <Verificate />,
       },
       {
