@@ -1,13 +1,15 @@
 import './../../App.css';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 
 const API_URL = import.meta.env.VITE_API_URL;
 const URL_FRONT = import.meta.env.VITE_URL_FRONT;
 const heading = "Inscription au jeu";
+
+const navigate = useNavigate();
 
 const validationSchema = Yup.object().shape({
     firstname: Yup.string().required('Ce champ est requis'),
@@ -47,7 +49,7 @@ function SignUpForm({ toggleForm }) {
                         const response = await axios.post(`${API_URL}/register`, values);
                         if (response.status === 200) {
                             alert('Inscription réussie, veuillez vérifier votre boîte mail pour activer votre compte');
-                            window.location.href = `${URL_FRONT}/auth/login`;
+                            navigate('/auth/login');
                         }
                     } catch (error) {
                         console.error('Erreur lors de l\'inscription');
