@@ -6,12 +6,13 @@ function Verificate() {
     const location = useLocation();
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
+    const API_URL = import.meta.env.VITE_API_URL;
 
     const {id} = useParams();
 
     const verifyAccount = async () => {
         try {
-            const response = await axios.post(`http://127.0.0.1:3000/verifyEmail`, { id });
+            const response = await axios.post(`${API_URL}/verifyEmail`, { id });
 
             if (response.status === 200) {
                 navigate('/auth/login');
