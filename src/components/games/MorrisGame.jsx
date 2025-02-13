@@ -223,7 +223,8 @@ const MorrisGame = ({ gameId, role, players, onGameStateChange }) => {
       phase: millFormed ? 'removing' : gameState.phase,
       currentPlayer: millFormed ? gameState.currentPlayer : getOpponent(),
       millFormed,
-      message: getPhaseMessage(millFormed, newPiecesToPlace[gameState.currentPlayer], allPiecesPlaced)
+      message: getPhaseMessage(millFormed, newPiecesToPlace[gameState.currentPlayer], allPiecesPlaced),
+      lastMove: position
     };
 
     // Si toutes les pièces sont placées, on passe en phase de déplacement
@@ -411,23 +412,24 @@ const MorrisGame = ({ gameId, role, players, onGameStateChange }) => {
 
   // Render board
   return (
-    <div>
-      {/* Message de statut du jeu */}
-      {gameState.phase === 'moving' && gameState.selectedPiece !== null && (
-        <div className="relative max-h-[3em] mb-8 bg-blue-500 text-white px-4 py-2 rounded shadow-lg animate-bounce">
-          Sélectionnez une position pour déplacer votre pièce
-        </div>
-      )}
-
-      {/* Game messages */}
-      {gameState.message && (
-        <div className="relative max-h-[3em] mb-8 bg-blue-500 text-white px-4 py-2 rounded shadow-lg animate-bounce">
-          {gameState.message}
-        </div>
-      )}
-    <div className="flex flex-col md:flex-row gap-8 p-6 bg-gray-100">
-
-
+    <div className="w-full min-h-screen p-4">
+      {/* Game info and notifications */}
+    <div className="mb-12 sm:mb-8 space-y-4">
+        {(gameState.message || (gameState.phase === 'moving' && gameState.selectedPiece !== null)) && (
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+            <div className="flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-4 border-l-4 border-blue-500">
+              <svg className="h-5 w-5 sm:h-6 sm:w-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <p className="font-medium text-gray-800 dark:text-gray-200 text-sm sm:text-base">
+                {gameState.message || "Sélectionnez une position pour déplacer votre pièce"}
+              </p>
+            </div>
+          </div>
+        )}
+        {/* Vous pouvez ajouter d'autres informations de jeu ici */}
+      </div>
+    <div className="flex flex-col items-center md:flex-row md:justify-center md:items-start gap-4 sm:gap-8">
       <div className="relative w-[600px] h-[600px] rounded-lg shadow-lg p-4">
 
         <svg className="absolute inset-0 w-full h-full" viewBox="0 0 600 600">
@@ -501,6 +503,12 @@ const MorrisGame = ({ gameId, role, players, onGameStateChange }) => {
 
   function getPointStyle(index) {
     const baseStyle = "hover:scale-110 ";
+
+    if (index === gameState.lastMove) {
+      return baseStyle + `${gameState.board[index] === 'black' 
+        ? 'bg-black ring-4 ring-yellow-400' 
+        : 'bg-blue-500 ring-4 ring-yellow-400 border-2'}`;
+    }
 
     if (gameState.selectedPiece === index) {
       return baseStyle + "bg-red-500 ring-4 ring-red-300";

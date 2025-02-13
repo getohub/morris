@@ -13,6 +13,7 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import AuthProvider from './components/auth/AuthContext'
 import TermsAndConditions from './components/app/Terms'
+import { ThemeProvider } from './contexts/ThemeContext.jsx'
 
 const router = createBrowserRouter([
   {
@@ -63,7 +64,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthProvider>
-      <RouterProvider router={router} />
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </AuthProvider>
   </StrictMode>
 )

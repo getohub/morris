@@ -1,4 +1,5 @@
 import './../../App.css';
+import { useState } from 'react';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
@@ -22,6 +23,7 @@ const validationSchema = Yup.object().shape({
 
 function SignUpForm({ toggleForm }) {
     const navigate = useNavigate();
+    const [showModal, setShowModal] = useState(false);
     
         SignUpForm.propTypes = {
             toggleForm: PropTypes.func.isRequired,
@@ -48,8 +50,11 @@ function SignUpForm({ toggleForm }) {
                     try {
                         const response = await axios.post(`${API_URL}/register`, values);
                         if (response.status === 200) {
-                            alert('Inscription réussie, veuillez vérifier votre boîte mail pour activer votre compte');
-                            navigate('/auth/login');
+                            setShowModal(true);
+                            setTimeout(() => {
+                                setShowModal(false);
+                                navigate('/auth/login');
+                            }, 3000);
                         }
                     } catch (error) {
                         console.error('Erreur lors de l\'inscription');
@@ -65,7 +70,7 @@ function SignUpForm({ toggleForm }) {
                                 <Field
                                     id="firstname"
                                     name="firstname"
-                                    placeholder="Jane"
+                                    placeholder="Prénom"
                                     className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                                 />
                                 {errors.firstname && touched.firstname ? (
@@ -80,7 +85,7 @@ function SignUpForm({ toggleForm }) {
                                 <Field
                                     id="lastname"
                                     name="lastname"
-                                    placeholder="Doe"
+                                    placeholder="Nom"
                                     className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                                 />
                                 {errors.lastname && touched.lastname ? (
@@ -95,7 +100,7 @@ function SignUpForm({ toggleForm }) {
                                 <Field
                                     id="username"
                                     name="username"
-                                    placeholder="janeDoe"
+                                    placeholder="Pseudo"
                                     className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                                 />
                                 {errors.username && touched.username ? (
@@ -110,7 +115,7 @@ function SignUpForm({ toggleForm }) {
                                 <Field
                                     id="email"
                                     name="email"
-                                    placeholder="jane@acme.com"
+                                    placeholder="Email"
                                     type="email"
                                     className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                                 />
@@ -154,14 +159,14 @@ function SignUpForm({ toggleForm }) {
 
                         <div className="flex items-center justify-between">
                             <p className="text-sm text-gray-500 w-full">
-                                    Vous avez un compte ?
+                                <span className="m-2">Vous avez un compte ?</span> 
                                 <Link to="/auth/login" className="font-medium text-blue-600 hover:text-blue-500">
                                     Se connecter
                                 </Link>
                             </p>   
                         </div>                  
                         <div>
-                            <button type="submit" className="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white w-full">
+                            <button type="submit" className="inline-block rounded-lg bg-blue-500 px-5 py-3 mb-4 text-sm font-medium text-white w-full">
                                 Inscription
                             </button>
                             <Link to="/" className='font-medium text-blue-600 hover:text-blue-500'>Retour à l'accueil</Link>
@@ -169,6 +174,22 @@ function SignUpForm({ toggleForm }) {
                     </Form>
                 )}
             </Formik>
+                {/* Success Modal */}
+                {showModal && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                        <div className="bg-white rounded-lg p-8 max-w-sm w-full mx-4 text-center">
+                            <h2 className="text-2xl font-bold mb-4 text-green-600">
+                                Inscription réussie !
+                            </h2>
+                            <p className="text-gray-600 mb-6">
+                                Veuillez vérifier votre boîte mail pour activer votre compte.
+                            </p>
+                            <div className="h-2 bg-gray-200 rounded-full mt-4">
+                                <div className="h-full bg-green-500 rounded-full animate-shrink"></div>
+                            </div>
+                        </div>
+                    </div>
+                )}
         </div>
     );
 }
