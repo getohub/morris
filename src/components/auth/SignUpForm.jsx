@@ -9,8 +9,6 @@ const API_URL = import.meta.env.VITE_API_URL;
 const URL_FRONT = import.meta.env.VITE_URL_FRONT;
 const heading = "Inscription au jeu";
 
-const navigate = useNavigate();
-
 const validationSchema = Yup.object().shape({
     firstname: Yup.string().required('Ce champ est requis'),
     lastname: Yup.string().required('Ce champ est requis'),
@@ -23,6 +21,8 @@ const validationSchema = Yup.object().shape({
 });
 
 function SignUpForm({ toggleForm }) {
+    const navigate = useNavigate();
+    
         SignUpForm.propTypes = {
             toggleForm: PropTypes.func.isRequired,
         };
