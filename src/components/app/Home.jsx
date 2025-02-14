@@ -80,7 +80,7 @@ function Home() {
                 Créer une nouvelle partie
               </button>
                 <Link to="/games/join" 
-                className="block text-center p-4 bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 rounded-lg text-white transition duration-200"
+                className="block text-center p-4 bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 rounded-lg text-white transition duration-200 w-full" style={{color: 'white'}}
               >
                   Rejoindre une partie
                 </Link>

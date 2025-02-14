@@ -412,7 +412,7 @@ const MorrisGame = ({ gameId, role, players, onGameStateChange }) => {
 
   // Render board
   return (
-    <div className="w-full min-h-screen p-4">
+    <div className="w-full p-4">
       {/* Game info and notifications */}
     <div className="mb-12 sm:mb-8 space-y-4">
         {(gameState.message || (gameState.phase === 'moving' && gameState.selectedPiece !== null)) && (
@@ -427,9 +427,9 @@ const MorrisGame = ({ gameId, role, players, onGameStateChange }) => {
             </div>
           </div>
         )}
-        {/* Vous pouvez ajouter d'autres informations de jeu ici */}
+
       </div>
-    <div className="flex flex-col items-center md:flex-row md:justify-center md:items-start gap-4 sm:gap-8">
+    <div className="flex flex-col md:flex-row gap-8 p-6 bg-gray-100">
       <div className="relative w-[600px] h-[600px] rounded-lg shadow-lg p-4">
 
         <svg className="absolute inset-0 w-full h-full" viewBox="0 0 600 600">
