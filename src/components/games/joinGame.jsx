@@ -328,7 +328,8 @@ function joinGame() {
                 !game.gameOver &&
                 !game.winner &&
                 game.player &&
-                !game.finished
+                !game.finished &&
+                (game.creator === user.id || game.player === user.id)
               )
               .map(game => (
                 <GameCard
@@ -339,28 +340,92 @@ function joinGame() {
                 />
               ))}
           </div>
-          {/* Parties terminées */}
-          <div className="space-y-6">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              Parties terminées
-            </h2>
-            {games
-              .filter(game =>
-                game.state === "finished" ||
-                game.gameOver ||
-                game.winner
-              )
-              .map(game => (
-                <GameCard
-                  key={game.id}
-                  game={game}
-                  currentUser={user}
-                  type="finished"
-                />
-              ))}
+        </div>
+        {/* Ajout du tableau récapitulatif */}
+        <div className="mt-12">
+          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">
+            Récapitulatif de toutes mes parties
+          </h2>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+              <thead className="bg-gray-50 dark:bg-gray-800">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                    ID Partie
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                    Créateur
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                    Joueur 2
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                    État
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                    Gagnant
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                    Score
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-900 dark:divide-gray-700">
+                {games
+                  .filter(game => game.creator === user.id || game.player === user.id)
+                  .map(game => (
+                    <tr key={game.id} className="hover:bg-gray-50 dark:hover:bg-gray-800">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-300">
+                        {game.id.slice(0, 8)}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-300">
+                        {game.creatorUsername}
+                        {game.creator === user.id && (
+                          <span className="ml-2 text-xs bg-yellow-100 dark:bg-yellow-900/50 text-yellow-800 dark:text-yellow-200 px-2 py-1 rounded-full">
+                            (Vous)
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-300">
+                        {game.playerUsername || "En attente"}
+                        {game.player === user.id && (
+                          <span className="ml-2 text-xs bg-yellow-100 dark:bg-yellow-900/50 text-yellow-800 dark:text-yellow-200 px-2 py-1 rounded-full">
+                            (Vous)
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm">
+                        {game.state === "pending" && (
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-200">
+                            En attente
+                          </span>
+                        )}
+                        {game.state === "playing" && (
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200">
+                            En cours
+                          </span>
+                        )}
+                        {(game.state === "finished" || game.winner) && (
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 dark:bg-gray-900/50 dark:text-gray-200">
+                            Terminée
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-300">
+                        {game.winner ? (
+                          <span className={game.winner === user.id ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}>
+                            {game.winner === game.creator ? game.creatorUsername : game.playerUsername}
+                            {game.winner === user.id && " (Vous)"}
+                          </span>
+                        ) : "-"}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-300">
+                        {game.winnerScore ? `${game.winnerScore} pièces` : "-"}
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
