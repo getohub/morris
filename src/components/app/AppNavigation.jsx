@@ -4,7 +4,7 @@ import { AuthContext } from '../auth/AuthContext.jsx';
 import { ThemeContext } from '../../contexts/ThemeContext.jsx';
 
 function AppNavigation() {
-    const { isAuthenticated, logout, token } = useContext(AuthContext);
+    const { isAuthenticated, logout, token, user } = useContext(AuthContext);
     const { darkMode, toggleDarkMode } = useContext(ThemeContext);
     const navigate = useNavigate();
 
@@ -42,6 +42,7 @@ function AppNavigation() {
                 </ul>
             </div>
             <div className="navbar-end">
+                {isAuthenticated && user && <p className="mr-2">Bonjour, {user.username}</p>}
                 <button 
                     onClick={toggleDarkMode}
                     className="btn btn-ghost btn-circle mr-2"

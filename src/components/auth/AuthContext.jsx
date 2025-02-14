@@ -19,7 +19,11 @@ const AuthProvider = ({ children }) => {
                     console.error('Token expiré');
                     logout();
                 } else {
-                    setUser({ id: decodedToken.id, token });
+                    setUser({
+                        id: decodedToken.id,
+                        token,
+                        username: decodedToken.username
+                    });
                     setIsAuthenticated(true);
                 }
 
@@ -45,6 +49,7 @@ const AuthProvider = ({ children }) => {
     const logout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('userId');
+        localStorage.removeItem('username');
         setUser(null);
         setToken(null);
         setIsAuthenticated(false);
